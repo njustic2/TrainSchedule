@@ -1,0 +1,10 @@
+.jumbotron {
+	text-align: center;
+};
+
+.borderStyle {
+margin: 5px, 96%, 5px, 10px;
+border-bottom-style: solid;
+border-bottom-width: 3px;
+border-bottom-color: #d1d1d1;
+};
