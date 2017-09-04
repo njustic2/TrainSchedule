@@ -23,20 +23,25 @@ var trainSchedule;
 $(document).ready(function() {
     trainsRef.on("child_added", function(snapshot) {
         var lastTrain = snapshot.val();
+        var trainName = lastTrain.trainName;
+        var destination = lastTrain.destination;
         var trainTime = lastTrain.trainTime;
         var frequency = lastTrain.frequency;
         var trainSchedule = snapshot.val().trianSchedule;
     // storing the snapshot.val() in a variable for convenience
         var nextTrainTime = getNextTrainTime(trainTime, frequency);
-        var row = $('<tr>')
-        var $name = $("<td>" + lastTrain.trainName);
-        var $destination = $("<td>" + lastTrain.destination)
 
 
-        $('tbody').append(row);
-        row.append($name);
-        row.append($destination)
-        console.log(lastTrain);
+        $('.table tbody').append(
+            '<tr>' + 
+                '<td>' + trainName + '</td>' +
+                '<td>' + destination + '</td>' +
+                '<td>' + trainTime + '</td>' +
+                '<td>' + frequency + '</td>' + 
+                '<td>' + getNextTrainTime(trainTime, frequency) + '</td>' +
+                '<td>Figure Out</td>' +
+            '</tr>'
+        );
 
         // //Moment.js Variables ================================================================================================    
         function getNextTrainTime(trainTime, frequency) {
@@ -46,14 +51,8 @@ $(document).ready(function() {
             var tRemainder = diffTime % frequency;    // Time apart (remainder)
             var tMinutesTillTrain = frequency - tRemainder;     // Minute Until Train
             var nextTrain = moment().add(tMinutesTillTrain, "minutes");    // Next Train
-            console.log("First Time: " + firstTimeConverted);
-            console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
-            console.log("DIFFERENCE IN TIME: " + diffTime);
-            console.log("REMAINDER: " + tRemainder);
-            console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-            console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-            return nextTrain;
-        };
+            return nextTrain.format('HH:mm');
+        }
     });
 
 
